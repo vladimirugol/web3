@@ -1,0 +1,78 @@
+body {
+    font-family: "Jost", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(90deg, #e50074, #ff4fa3);
+    color: white;
+    padding: 2rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.center-aligner {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.main-header p:first-child {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    letter-spacing: 1px;
+}
+
+.main-header p:nth-child(2),
+.main-header p:nth-child(3) {
+    font-size: 1.1rem;
+    margin: 0.2rem 0;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background: #e50074;
+    margin: 0;
+}
+
+
+
+
+a {
+    display: inline-block;
+    margin-top: 3rem;
+    background-color: #e50074;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(229, 0, 116, 0.3);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    background-color: #ff4fa3;
+    box-shadow: 0 6px 14px rgba(229, 0, 116, 0.4);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .main-header p:first-child {
+        font-size: 1.5rem;
+    }
+
+    a {
+        width: 80%;
+        font-size: 1rem;
+    }
+}

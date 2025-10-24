@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="static" name="css/start.css"/>
+    <h:outputStylesheet library="static" name="css/main.css"/>
+    <title>Web3</title>
+</h:head>
+
+<h:body>
+    <main class="grid-layout">
+        <div class="grid-item">
+            <a href="variant.xhtml">To variant</a>
+            <canvas class="graph shadowed-box" id="graph" width="400" height="400"/>
+            <h:form id="mainForm">
+                <fieldset class="shadowed-box">
+                    <div class="input" id="x">
+                        <h:outputText id="output" value="X: #{sliderBean.x}"/>
+                        <h:inputHidden id="x-input" value="#{sliderBean.x}"/>
+                        <p:slider for="x-input" display="output" style="width: 100px;" minValue="-5.0" maxValue="5.0"
+                                  step="1"
+                                  displayTemplate="X: {value}"/>
+                    </div>
+                    <div class="input" id="y">
+                        <p:inputText id="y-input" placeholder="Y (-5 ... 5)"
+                                     value="#{formPointBean.y}" required="true"
+                                     requiredMessage="Please write Y-value">
+                            <f:validateDoubleRange minimum="-5" maximum="5"/>
+                        </p:inputText>
+                        <h:message for="y-input" style="color: red; display: block;"/>
+                    </div>
+                    <h:inputHidden id="x-hidden" value="#{formPointBean.x}"/>
+                    <div class="input" id="r">
+                        <h:outputText id="r-display" value="R: #{formPointBean.r}"/>
+                        <h:inputHidden id="r-hidden" value="#{formPointBean.r}"/>
+                        <ui:repeat value="#{[-3,-2,-1,0,1,2,3,4,5]}" var="val">
+                            <p:commandLink value="#{val}" action="#{formPointBean.setR(val)}"
+                                           update=":mainForm:r-display :mainForm:r-hidden"
+                                           oncomplete="drawGraph()"
+                                           style="margin: 0 4px;"/>
+                        </ui:repeat>
+                    </div>
+                    <div class="center-aligner" style="margin-top: 15px;">
+                        <p:commandButton value="Send"
+                                         action="#{resultsManagerBean.addNewResult}"
+                                         update=":resultsTable @form"
+                                         oncomplete="drawGraph()"
+                                         process="@form"/>
+                    </div>
+                </fieldset>
+            </h:form>
+        </div>
+
+        <div class="grid-item">
+            <h:panelGroup id="resultsTable">
+                <p:dataTable value="#{resultsManagerBean.results}" var="dot"
+                             scrollable="true" scrollHeight="800px"
+                             styleClass="centered-table">
+
+                    <p:column headerText="X">
+                        <h:outputText value="#{dot.x}">
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Y">
+                        <h:outputText value="#{dot.y}">
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="R">
+                        <h:outputText value="#{dot.r}">
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Hit">
+                        <h:outputText value="#{dot.hit ? 'true' : 'false'}"/>
+                    </p:column>
+                    <p:column headerText="Current time">
+                        <h:outputText value="#{dot.currentTime}"/>
+                    </p:column>
+                    <p:column headerText="Exec time">
+                        <h:outputText value="#{dot.execMs}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </div>
+    </main>
+    <h:outputScript library="static" name="js/graph.js"/>
+</h:body>
+</html>

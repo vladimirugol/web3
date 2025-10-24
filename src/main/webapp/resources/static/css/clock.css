@@ -1,0 +1,19 @@
+
+.clock {
+    font-family: "Jost", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #e50074;
+    text-align: center;
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(229, 0, 116, 0.1);
+    display: inline-block;
+    min-width: 200px;
+}
+
+.clock {
+    transition: all 0.3s ease;
+}
