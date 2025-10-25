@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="jakarta.faces.core"
-      xmlns:ui="jakarta.faces.facelets">
+      xmlns:h = "http://java.sun.com/jsf/html"
+      xmlns:f = "http://java.sun.com/jsf/core"
+      xmlns:ui = "http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="center-aligner" style="margin-top: 15px;">
                         <p:commandButton value="Send"
-                                         action="#{resultsManagerBean.addNewResult}"
+                                         action="#{resultManagerBean.addNewResult()}"
                                          update=":resultsTable @form"
                                          oncomplete="drawGraph()"
                                          process="@form"/>

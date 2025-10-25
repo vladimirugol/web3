@@ -1,13 +1,13 @@
 package com.vladimirugol.management;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Named
+@ManagedBean(name = "formPointBean", eager = true)
 @RequestScoped
 @Data
 public class FormPointBean implements Serializable {

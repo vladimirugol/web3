@@ -1,5 +1,5 @@
 package com.vladimirugol.model;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Table(name="result")
 @NoArgsConstructor
 @Data
-public class ResultPointBean implements Serializable {
+public class ResultPointEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +20,7 @@ public class ResultPointBean implements Serializable {
     private String currentTime;
     private long execMs;
 
-    public ResultPointBean(BigDecimal x, BigDecimal y, BigDecimal r, boolean hit, String currentTime, Long execMs) {
+    public ResultPointEntity(BigDecimal x, BigDecimal y, BigDecimal r, boolean hit, String currentTime, Long execMs) {
         this.x = x;
         this.y = y;
         this.r = r;

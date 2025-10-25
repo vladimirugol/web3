@@ -1,46 +1,63 @@
 package com.vladimirugol.database;
 
+import com.vladimirugol.checkPoint.HitChecker;
 import com.vladimirugol.model.PointData;
-import com.vladimirugol.model.ResultPointBean;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.transaction.Transactional;
+import com.vladimirugol.model.ResultPointEntity;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.naming.InitialContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static com.vladimirugol.checkPoint.HitChecker.checkHit;
+@ManagedBean(name = "dataService", eager = true)
 @ApplicationScoped
 public class DataService {
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("se.ifmo.web3");
-    private final EntityManager em = emf.createEntityManager();
+
+    @PersistenceContext(unitName = "se.ifmo.web3")
+    private EntityManager em;
+
     private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-    @Transactional
-    public ResultPointBean processData(PointData req) {
-        long startTime = System.nanoTime();
+    public ResultPointEntity processData(PointData req) {
+        UserTransaction utx = null;
+        try {
+            utx = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+            utx.begin();
 
-        boolean isHit = checkHit(req);
-        String currentTime = LocalTime.now().format(DTF);
-        ResultPointBean resultPoint = new ResultPointBean(
-                req.getX(),
-                req.getY(),
-                req.getR(),
-                isHit,
-                currentTime,
-                System.nanoTime() - startTime
-        );
-        em.persist(resultPoint);
-        return resultPoint;
+            long startTime = System.nanoTime();
+            boolean isHit = HitChecker.checkHit(req);
+            String currentTime = LocalTime.now().format(DTF);
+            ResultPointEntity resultPoint = new ResultPointEntity(
+                    req.getX(),
+                    req.getY(),
+                    req.getR(),
+                    isHit,
+                    currentTime,
+                    System.nanoTime() - startTime
+            );
+            em.persist(resultPoint);
+
+            utx.commit();
+            return resultPoint;
+
+        } catch (Exception e) {
+            if (utx != null) {
+                try {
+                    utx.rollback();
+                } catch (Exception rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
+            throw new RuntimeException("Transaction failed", e);
+        }
     }
 
-
-    @Transactional
-    public List<ResultPointBean> get() {
-        return em.createQuery("SELECT d FROM ResultPointBean d", ResultPointBean.class).getResultList();
+    public List<ResultPointEntity> get() {
+        return em.createQuery("SELECT d FROM ResultPointEntity d", ResultPointEntity.class).getResultList();
     }
 }

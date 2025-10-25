@@ -7,7 +7,8 @@ node_modules
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+wildfly-26.1.0.Final/
+wildfly-26.1.0.Final.zip
 ### IntelliJ IDEA ###
 .idea
 .idea/modules.xml

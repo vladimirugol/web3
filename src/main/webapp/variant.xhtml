@@ -1,32 +1,8 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-    <meta charset="UTF-8"/>
-    <title>Web3</title>
-    <h:outputStylesheet library="static" name="css/variant.css"/>
-    <h:outputStylesheet library="static" name="css/clock.css"/>
-</h:head>
-
+      xmlns:h="http://java.sun.com/jsf/html">
+<h:head><title>Test</title></h:head>
 <h:body>
-    <header class="main-header">
-        <div class="center-aligner">
-            <p>Web Programming</p>
-            <p>Variant №372374</p>
-            <p>Radchenko Alina Alexandrovna</p>
-        </div>
-    </header>
-
-    <main class="center-aligner">
-        <h:form>
-            <h:outputText id="clock" value="#{clockBean.currentTime}" styleClass="clock"/>
-            <p:poll interval="5" update="clock"/>
-        </h:form>
-
-        <a href="index.xhtml" class="link">To program</a>
-    </main>
+    <h1>It works!</h1>
 </h:body>
 </html>

@@ -1,30 +1,27 @@
 package com.vladimirugol.management;
 
 import com.vladimirugol.model.PointData;
-import com.vladimirugol.model.ResultPointBean;
+import com.vladimirugol.model.ResultPointEntity;
 import com.vladimirugol.database.DataService;
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-
+import javax.annotation.PostConstruct;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Named
+@ManagedBean(name = "resultManagerBean", eager = true)
 @SessionScoped
 public class ResultsManagerBean implements Serializable {
-    @Inject
-    DataService dataService;
 
-    @Inject
-    FormPointBean formPointBean;
+    @ManagedProperty(value = "#{dataService}")
+    private DataService dataService;
 
-    @Inject
-    SliderBean sliderBean;
-    private List<ResultPointBean> results;
+    @ManagedProperty(value = "#{formPointBean}")
+    private FormPointBean formPointBean;
+
+    private List<ResultPointEntity> results;
 
     @PostConstruct
     public void init() {
@@ -37,10 +34,31 @@ public class ResultsManagerBean implements Serializable {
                 formPointBean.getY(),
                 formPointBean.getR()
         );
-        ResultPointBean newResult = dataService.processData(pointData);
+        ResultPointEntity newResult = dataService.processData(pointData);
         results.add(0, newResult);
     }
-    public List<ResultPointBean> getResults() {
+
+    public List<ResultPointEntity> getResults() {
         return results;
+    }
+
+    public void setDataService(DataService dataService) {
+        this.dataService = dataService;
+    }
+
+    public DataService getDataService() {
+        return dataService;
+    }
+
+    public FormPointBean getFormPointBean() {
+        return formPointBean;
+    }
+
+    public void setFormPointBean(FormPointBean formPointBean) {
+        this.formPointBean = formPointBean;
+    }
+
+    public void setResults(List<ResultPointEntity> results) {
+        this.results = results;
     }
 }

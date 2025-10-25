@@ -1,14 +1,12 @@
 package com.vladimirugol.management;
-
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import lombok.Data;
 
 import java.io.Serializable;
-
+@ManagedBean(name = "sliderBean", eager = true)
 @Data
-@Named
-@ViewScoped
+@SessionScoped
 public class SliderBean implements Serializable {
     private double x = 1.0;
 }

@@ -1,18 +1,16 @@
 package com.vladimirugol.management;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
-
-import java.io.Serializable;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Named
+@ManagedBean(name = "clockBean", eager = true)
 @ApplicationScoped
-public class ClockBean implements Serializable {
+public class ClockBean {
 
     private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public String getCurrentTime() {
         return LocalDateTime.now().format(FORMATTER);
