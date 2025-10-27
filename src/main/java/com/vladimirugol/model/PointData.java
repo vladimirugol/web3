@@ -12,6 +12,7 @@ public class PointData implements Serializable {
     private BigDecimal r;
     public PointData() {
     }
+    
     public PointData(BigDecimal x, BigDecimal y, BigDecimal r) {
         this.x = x;
         this.y = y;
@@ -22,3 +23,4 @@ public class PointData implements Serializable {
         return x != null && y != null && r != null;
     }
 }
+
